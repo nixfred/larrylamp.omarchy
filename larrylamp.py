@@ -5,16 +5,19 @@
   larrylamp.py act <action> [text]    nod | look | sleep | wake | theme-light | ask <text> | say <text> | hooks-on | hooks-off
 
 Talks to the lamp over your tailnet: set LAMP_URL, or put the URL on the first line of
-~/.config/larry-lamp/url, so the same plugin works on every machine. Stdlib only; never raises into the bar.
+~/.config/larry-lamp/url, so the same plugin works on every machine. With neither, it talks to the
+lamp services on this machine directly (HAL on 127.0.0.1:5001, broker on 127.0.0.1:5055).
+Stdlib only; never raises into the bar.
 """
 import json
 import os
 import sys
 import time
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 
 def _base_url():
-    """LAMP_URL wins; else the first line of ~/.config/larry-lamp/url; else this machine."""
+    """LAMP_URL wins; else the first line of ~/.config/larry-lamp/url; else "" (this machine)."""
     url = os.environ.get("LAMP_URL", "").strip()
     if not url:
         try:
@@ -22,11 +25,15 @@ def _base_url():
                 url = f.readline().strip()
         except OSError:
             url = ""
-    return (url or "http://127.0.0.1:8443").rstrip("/")
+    return url.rstrip("/")
 
 
-BASE = _base_url()
-BROKER = BASE + "/larry"
+# A configured URL is a front door that serves HAL at / and the broker at /larry (tailscale serve).
+# Without one, talk to the local services directly. The old default, http://127.0.0.1:8443, was
+# never served by anything: tailscale serve listens on the tailnet address with TLS, not loopback.
+_URL = _base_url()
+BASE = _URL or "http://127.0.0.1:5001"
+BROKER = (_URL + "/larry") if _URL else "http://127.0.0.1:5055/larry"
 DISABLED = os.path.expanduser("~/.config/larry-lamp/disabled")
 
 
@@ -45,22 +52,34 @@ def safe(url, body=None, timeout=4):
         return None
 
 
+_POOL = ThreadPoolExecutor(max_workers=4)
+
+
 def state():
-    led = safe(BASE + "/led/color") or {}
-    ses = safe(BROKER + "/sessions") or {}
-    om = safe(BROKER + "/omarchy") or {}
-    said = safe(BASE + "/voice/last-spoken") or {}
+    # In parallel: a lamp that does not answer costs one timeout per refresh, not four in a row
+    futs = [_POOL.submit(safe, u) for u in (BASE + "/led/color", BROKER + "/sessions",
+                                             BROKER + "/omarchy", BASE + "/voice/last-spoken")]
+    led_r, ses_r, om_r, said_r = (f.result() for f in futs)
+    led, ses, om, said = led_r or {}, ses_r or {}, om_r or {}, said_r or {}
     sessions = ses.get("sessions") or []
+
+    def shown(s):
+        # The broker marks sessions from a host that stopped heartbeating as stale; they never mean "needs you"
+        st = s.get("state", "idle")
+        return "idle" if st == "wait" and s.get("stale") else st
+
     prio = {"wait": 5, "fail": 4, "think": 3, "ship": 2, "idle": 1}
-    top = max(sessions, key=lambda s: prio.get(s.get("state"), 0), default=None)
+    top = max(sessions, key=lambda s: prio.get(shown(s), 0), default=None)
     pal = (om.get("palette") or {})
     return {
-        "online": bool(led),
+        # online = the lamp (HAL) answers; broker = the session broker answers. Either can be down alone.
+        "online": led_r is not None,
+        "broker": ses_r is not None,
         "led": {"on": led.get("on", False), "hex": led.get("hex") or "#000000", "effect": led.get("effect")},
-        "sessions": [{"project": s.get("project", "?"), "host": s.get("host", "?"), "state": s.get("state", "idle"),
+        "sessions": [{"project": s.get("project", "?"), "host": s.get("host", "?"), "state": shown(s),
                       "age": s.get("age_s", 0)} for s in sessions][:12],
-        "top": top.get("state") if top else "none",
-        "waiting": sum(1 for s in sessions if s.get("state") == "wait"),
+        "top": shown(top) if top else "none",
+        "waiting": sum(1 for s in sessions if shown(s) == "wait"),
         "theme": pal.get("name", ""),
         "accent": (pal.get("colors") or {}).get("accent", ""),
         "locked": bool(om.get("locked")),
