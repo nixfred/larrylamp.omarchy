@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520" role="img" aria-labelledby="t d">
+  <title id="t">Larry Lamp for Omarchy: how it fits together</title>
+  <desc id="d">The bar widget and panel read state from a Quickshell service, which runs larrylamp.py. The script polls the lamp HAL and the session broker over HTTP; the broker gets Claude Code session events from hooks and drives the lamp.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#7d8da0"/>
+    </marker>
+    <style>
+      .box { fill: #0e1319; stroke: #263342; stroke-width: 2; }
+      .hot { stroke: #22e3ff; }
+      .amb { stroke: #ffb020; }
+      .h { font: 700 17px 'JetBrains Mono', ui-monospace, monospace; fill: #d8e3ee; }
+      .s { font: 13px 'JetBrains Mono', ui-monospace, monospace; fill: #7d8da0; }
+      .c { font: 12px 'JetBrains Mono', ui-monospace, monospace; fill: #22e3ff; }
+      .l { stroke: #7d8da0; stroke-width: 2; fill: none; marker-end: url(#a); }
+      .g { font: 700 13px 'JetBrains Mono', ui-monospace, monospace; fill: #ffb020; letter-spacing: 3px; }
+    </style>
+  </defs>
+  <rect width="1100" height="520" rx="18" fill="#07090c"/>
+
+  <text x="40" y="44" class="g">YOUR OMARCHY DESKTOP</text>
+  <rect x="30" y="58" width="470" height="420" rx="14" fill="none" stroke="#1f2a36" stroke-dasharray="6 6"/>
+
+  <rect x="60" y="80" width="190" height="96" rx="12" class="box hot"/>
+  <text x="78" y="110" class="h">BarWidget.qml</text>
+  <text x="78" y="134" class="s">ring in the LED colour</text>
+  <text x="78" y="154" class="s">amber = needs you</text>
+
+  <rect x="280" y="80" width="190" height="96" rx="12" class="box hot"/>
+  <text x="298" y="110" class="h">LampPanel.qml</text>
+  <text x="298" y="134" class="s">sessions, last words</text>
+  <text x="298" y="154" class="s">ask Larry, controls</text>
+
+  <rect x="60" y="226" width="410" height="84" rx="12" class="box"/>
+  <text x="78" y="256" class="h">Service.qml</text>
+  <text x="78" y="280" class="s">keeps the latest JSON line; runs actions</text>
+  <text x="78" y="298" class="s">as one-shot processes (argv, no shell)</text>
+
+  <rect x="60" y="360" width="410" height="104" rx="12" class="box amb"/>
+  <text x="78" y="390" class="h">larrylamp.py</text>
+  <text x="78" y="414" class="s">python3 stdlib; watch = 1 line every N s</text>
+  <text x="78" y="434" class="s">4 GETs in parallel, never raises</text>
+  <text x="78" y="454" class="s">act: nod | look | wake | sleep | ask | say</text>
+
+  <path class="l" d="M155 226 V180"/>
+  <path class="l" d="M375 226 V180"/>
+  <path class="l" d="M265 360 V314"/>
+
+  <text x="600" y="44" class="g">THE LAMP SIDE</text>
+  <rect x="590" y="80" width="470" height="170" rx="12" class="box amb"/>
+  <text x="610" y="110" class="h">Lamp HAL (or its simulator)</text>
+  <text x="610" y="134" class="s">default http://127.0.0.1:5001</text>
+  <text x="610" y="162" class="c">GET  /led/color   /voice/last-spoken</text>
+  <text x="610" y="182" class="c">POST /servo/play  /servo/aim</text>
+  <text x="610" y="202" class="c">POST /led/off     /voice/speak</text>
+  <text x="610" y="230" class="s">servos, LED ring, camera, voice, emotions, scenes</text>
+
+  <rect x="590" y="290" width="470" height="174" rx="12" class="box hot"/>
+  <text x="610" y="320" class="h">Session broker (lamp broker)</text>
+  <text x="610" y="344" class="s">default http://127.0.0.1:5055/larry</text>
+  <text x="610" y="372" class="c">GET  /larry/sessions  /larry/omarchy</text>
+  <text x="610" y="392" class="c">POST /larry/ask       /larry/omarchy/event</text>
+  <text x="610" y="420" class="s">Claude Code hooks report sessions; it decides</text>
+  <text x="610" y="440" class="s">what the lamp shows and drives the HAL</text>
+
+  <path class="l" d="M470 390 C530 390 530 165 586 165"/>
+  <path class="l" d="M470 412 C540 412 540 377 586 377"/>
+  <path class="l" d="M825 290 V254"/>
+  <text x="836" y="276" class="s">drives</text>
+  <text x="40" y="508" class="s">LAMP_URL or ~/.config/larry-lamp/url: one URL that serves the HAL at / and the broker at /larry</text>
+</svg>

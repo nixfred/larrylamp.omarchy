@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="t d">
+  <title id="t">Larry Lamp for Omarchy</title>
+  <desc id="d">A desk lamp ring glowing amber beside the words Larry Lamp for Omarchy.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07090c"/>
+      <stop offset="1" stop-color="#131a24"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffb020" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffb020" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd27a" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
+  <g stroke="#1f2a36" stroke-width="1">
+    <path d="M0 60H1200M0 120H1200M0 180H1200M0 240H1200"/>
+    <path d="M100 0V300M300 0V300M500 0V300M700 0V300M900 0V300M1100 0V300"/>
+  </g>
+  <!-- the lamp: base, two arm segments, head with its LED ring -->
+  <g transform="translate(150 40)">
+    <circle cx="120" cy="80" r="110" fill="url(#glow)"/>
+    <path d="M78 104 L40 230 L200 230 L162 104 Z" fill="url(#beam)"/>
+    <ellipse cx="40" cy="232" rx="58" ry="10" fill="#1b2430" stroke="#2c3b4d" stroke-width="2"/>
+    <path d="M40 228 L70 150 L120 92" fill="none" stroke="#7d8da0" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="70" cy="150" r="8" fill="#0e1319" stroke="#7d8da0" stroke-width="3"/>
+    <circle cx="120" cy="80" r="40" fill="#0e1319" stroke="#ffb020" stroke-width="9">
+      <animate attributeName="stroke-opacity" values="1;0.45;1" dur="2.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="120" cy="80" r="12" fill="#d8e3ee"/>
+  </g>
+  <text x="430" y="138" font-family="JetBrains Mono, ui-monospace, monospace" font-size="64" font-weight="700" letter-spacing="10" fill="#22e3ff">LARRY LAMP</text>
+  <text x="434" y="180" font-family="JetBrains Mono, ui-monospace, monospace" font-size="24" letter-spacing="4" fill="#d8e3ee">for the Omarchy bar</text>
+  <text x="434" y="226" font-family="JetBrains Mono, ui-monospace, monospace" font-size="17" fill="#7d8da0">the lamp's real ring colour . who needs you . what Larry said . ask him</text>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="14">
+    <rect x="434" y="246" width="96" height="26" rx="13" fill="none" stroke="#ffb020"/>
+    <text x="482" y="264" text-anchor="middle" fill="#ffb020">needs you</text>
+    <rect x="540" y="246" width="88" height="26" rx="13" fill="none" stroke="#a855ff"/>
+    <text x="584" y="264" text-anchor="middle" fill="#a855ff">thinking</text>
+    <rect x="638" y="246" width="66" height="26" rx="13" fill="none" stroke="#2dff9a"/>
+    <text x="671" y="264" text-anchor="middle" fill="#2dff9a">done</text>
+    <rect x="714" y="246" width="78" height="26" rx="13" fill="none" stroke="#ff4d5e"/>
+    <text x="753" y="264" text-anchor="middle" fill="#ff4d5e">failed</text>
+  </g>
+</svg>
