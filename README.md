@@ -101,7 +101,7 @@ Click it and you get the panel: every session, Larry's last words, an ask-Larry 
 
 **Body.** The lamp HAL (hardware abstraction layer) moves the servos, lights the LED ring and speaks.
 
-**Your bar.** Four small files:
+**Your bar.** Five small files:
 
 | File | Job |
 | --- | --- |
