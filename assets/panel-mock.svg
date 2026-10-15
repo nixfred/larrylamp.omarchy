@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="640" viewBox="0 0 720 640" role="img" aria-labelledby="t d">
+  <title id="t">The Larry Lamp panel</title>
+  <desc id="d">Header with the ring, LARRY LAMP, the LED hex and effect, and the theme name. An ask Larry field, Larry's last words, a list of Claude Code sessions with coloured state dots, and lamp controls: nod, look at me, theme light, wake, sleep, sessions on, open console.</desc>
+  <defs>
+    <filter id="g" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>
+      .m { font: 12.5px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8197b5; }
+      .bt { font: 13px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #e6edf7; }
+      .cap { font: 12px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8197b5; letter-spacing: 2px; }
+    </style>
+  </defs>
+  <rect x="1" y="1" width="718" height="638" rx="16" fill="#0a0e17" stroke="#2a3a52" stroke-width="2"/>
+  <circle cx="44" cy="44" r="8" fill="none" stroke="#2ea8ff" stroke-width="3.2" filter="url(#g)"><animate attributeName="opacity" values="1;0.45;1" dur="2.8s" repeatCount="indefinite"/></circle>
+  <text x="64" y="51" style="font:700 19px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7;letter-spacing:2px">LARRY LAMP</text>
+  <text x="224" y="50" class="m">#2ea8ff  breathing</text>
+  <rect x="560" y="31" width="128" height="26" rx="13" fill="none" stroke="#2ea8ff"/>
+  <text x="624" y="49" text-anchor="middle" class="m" style="fill:#e6edf7">tokyo night</text>
+
+  <rect x="32" y="78" width="546" height="38" rx="6" fill="#ffffff" fill-opacity="0.04" stroke="#2ea8ff" stroke-opacity="0.7"/>
+  <text x="46" y="102" style="font:14px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7">is the lamp-broker PR green yet?</text>
+  <rect x="268" y="88" width="2" height="18" fill="#2ea8ff"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1s" repeatCount="indefinite"/></rect>
+  <rect x="588" y="81" width="100" height="32" rx="5" fill="#2ea8ff" fill-opacity="0.18" stroke="#2ea8ff"/><text x="638.0" y="102" text-anchor="middle" class="bt">ask</text>
+  <text x="32" y="138" class="m">asked: what did the last test run say?</text>
+
+  <rect x="32" y="152" width="656" height="100" rx="6" fill="#2ea8ff" fill-opacity="0.08" stroke="#2ea8ff" stroke-opacity="0.5"/>
+  <text x="46" y="182" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7">Larry: the last run passed, 48 of 48. The flaky timeout test</text>
+  <text x="46" y="204" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7">is fixed on the branch. Two sessions are waiting on you,</text>
+  <text x="46" y="226" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7">larrylamp.omarchy first.</text>
+
+  <text x="32" y="288" class="cap">SESSIONS  5</text>
+  <circle cx="46" cy="318" r="5.5" fill="#f5a623"><animate attributeName="opacity" values="1;0.35;1" dur="1.4s" repeatCount="indefinite"/></circle><text x="64" y="323" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;fill:#f5a623">larrylamp.omarchy</text><text x="470" y="323" text-anchor="end" class="m">desk</text><text x="680" y="323" text-anchor="end" class="m">needs you . 12s</text><circle cx="46" cy="352" r="5.5" fill="#f5a623"><animate attributeName="opacity" values="1;0.35;1" dur="1.4s" repeatCount="indefinite"/></circle><text x="64" y="357" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;fill:#f5a623">nixfred.com</text><text x="470" y="357" text-anchor="end" class="m">laptop</text><text x="680" y="357" text-anchor="end" class="m">needs you . 1m</text><circle cx="46" cy="386" r="5.5" fill="#a855ff"><animate attributeName="opacity" values="1;0.35;1" dur="1.4s" repeatCount="indefinite"/></circle><text x="64" y="391" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7">dotfiles</text><text x="470" y="391" text-anchor="end" class="m">desk</text><text x="680" y="391" text-anchor="end" class="m">thinking . 3s</text><circle cx="46" cy="420" r="5.5" fill="#2dff9a"></circle><text x="64" y="425" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7">homelab</text><text x="470" y="425" text-anchor="end" class="m">laptop</text><text x="680" y="425" text-anchor="end" class="m">done . 4m</text><circle cx="46" cy="454" r="5.5" fill="#5b7fa8"></circle><text x="64" y="459" style="font:15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e6edf7">notes</text><text x="470" y="459" text-anchor="end" class="m">desk</text><text x="680" y="459" text-anchor="end" class="m">idle . 22m</text>
+  <line x1="32" y1="490" x2="688" y2="490" stroke="#1d2b42"/>
+  <rect x="32" y="508" width="155" height="32" rx="5" fill="#ffffff" fill-opacity="0.05" stroke="#2c3a50"/><text x="109.5" y="529" text-anchor="middle" class="bt">nod</text><rect x="194" y="508" width="155" height="32" rx="5" fill="#2ea8ff" fill-opacity="0.18" stroke="#2ea8ff"/><text x="271.5" y="529" text-anchor="middle" class="bt">look at me</text><rect x="356" y="508" width="155" height="32" rx="5" fill="#ffffff" fill-opacity="0.05" stroke="#2c3a50"/><text x="433.5" y="529" text-anchor="middle" class="bt">theme light</text><rect x="518" y="508" width="155" height="32" rx="5" fill="#ffffff" fill-opacity="0.05" stroke="#2c3a50"/><text x="595.5" y="529" text-anchor="middle" class="bt">wake</text><rect x="32" y="546" width="155" height="32" rx="5" fill="#ffffff" fill-opacity="0.05" stroke="#2c3a50"/><text x="109.5" y="567" text-anchor="middle" class="bt">sleep</text><rect x="194" y="546" width="155" height="32" rx="5" fill="#ffffff" fill-opacity="0.05" stroke="#2c3a50"/><text x="271.5" y="567" text-anchor="middle" class="bt">sessions: on</text><rect x="356" y="546" width="317" height="32" rx="5" fill="#ffffff" fill-opacity="0.05" stroke="#2c3a50"/><text x="514.5" y="567" text-anchor="middle" class="bt">open console</text>
+  <text x="688" y="612" text-anchor="end" style="font:11.5px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace;fill:#8197b5">Enter asks Larry  |  Esc closes  |  omarchy-shell nixfred.larrylamp toggle</text>
+</svg>

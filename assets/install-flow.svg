@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="290" viewBox="0 0 1200 290" role="img" aria-labelledby="t d">
+  <title id="t">Install in four steps</title>
+  <desc id="d">1 clone the repo. 2 link it into ~/.config/omarchy/plugins/nixfred.larrylamp. 3 add Larry Lamp in the Omarchy bar settings. 4 optionally point it at your lamp with ~/.config/larry-lamp/url.</desc>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2ea8ff"/></marker>
+    <style>
+      .k { font: 700 13px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #2ea8ff; letter-spacing: 4px; }
+      .h { font: 700 19px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #e6f0ff; }
+      .n { font: 800 17px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+      .c { font: 12.5px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #9fd8ff; }
+      .s { font: 12.5px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #6f86a6; }
+      .fl { fill: none; stroke: #2ea8ff; stroke-width: 2.5; stroke-dasharray: 6 6; marker-end: url(#ar); animation: f 1s linear infinite; }
+      @keyframes f { to { stroke-dashoffset: -24; } }
+    </style>
+  </defs>
+  <rect width="1200" height="290" rx="22" fill="#05080e"/>
+  <rect x="1" y="1" width="1198" height="288" rx="21" fill="none" stroke="#1a2638" stroke-width="2"/>
+  <text x="40" y="48" class="k">INSTALL  /  ABOUT A MINUTE</text>
+  <g transform="translate(40 70)">
+    <rect width="250" height="170" rx="16" fill="#0b111b" stroke="#2ea8ff" stroke-opacity="0.8" stroke-width="2"/>
+    <circle cx="36" cy="38" r="18" fill="#2ea8ff" fill-opacity="0.15" stroke="#2ea8ff" stroke-width="2"/>
+    <text x="36" y="44" text-anchor="middle" class="n" style="fill:#2ea8ff">1</text>
+    <text x="66" y="45" class="h">clone</text>
+    <rect x="16" y="78" width="218" height="68" rx="8" fill="#05080e" stroke="#18243a"/>
+    <text x="28" y="106" class="c">git clone .../</text><text x="28" y="130" class="c">larrylamp.omarchy</text>
+  </g>
+  <path class="fl" d="M296 155 H332"/>
+  <g transform="translate(336 70)">
+    <rect width="250" height="170" rx="16" fill="#0b111b" stroke="#2ea8ff" stroke-opacity="0.8" stroke-width="2"/>
+    <circle cx="36" cy="38" r="18" fill="#2ea8ff" fill-opacity="0.15" stroke="#2ea8ff" stroke-width="2"/>
+    <text x="36" y="44" text-anchor="middle" class="n" style="fill:#2ea8ff">2</text>
+    <text x="66" y="45" class="h">link</text>
+    <rect x="16" y="78" width="218" height="68" rx="8" fill="#05080e" stroke="#18243a"/>
+    <text x="28" y="106" class="c">ln -s $PWD ~/.config/</text><text x="28" y="130" class="c">omarchy/plugins/...</text>
+  </g>
+  <path class="fl" d="M592 155 H628"/>
+  <g transform="translate(632 70)">
+    <rect width="250" height="170" rx="16" fill="#0b111b" stroke="#f5a623" stroke-opacity="0.8" stroke-width="2"/>
+    <circle cx="36" cy="38" r="18" fill="#f5a623" fill-opacity="0.15" stroke="#f5a623" stroke-width="2"/>
+    <text x="36" y="44" text-anchor="middle" class="n" style="fill:#f5a623">3</text>
+    <text x="66" y="45" class="h">add to bar</text>
+    <rect x="16" y="78" width="218" height="68" rx="8" fill="#05080e" stroke="#18243a"/>
+    <text x="28" y="106" class="c">bar settings:</text><text x="28" y="130" class="c">+ Larry Lamp</text>
+  </g>
+  <path class="fl" d="M888 155 H924"/>
+  <g transform="translate(928 70)">
+    <rect width="250" height="170" rx="16" fill="#0b111b" stroke="#2dff9a" stroke-opacity="0.8" stroke-width="2" stroke-dasharray="6 5"/>
+    <circle cx="36" cy="38" r="18" fill="#2dff9a" fill-opacity="0.15" stroke="#2dff9a" stroke-width="2"/>
+    <text x="36" y="44" text-anchor="middle" class="n" style="fill:#2dff9a">4</text>
+    <text x="66" y="45" class="h">point (opt.)</text>
+    <rect x="16" y="78" width="218" height="68" rx="8" fill="#05080e" stroke="#18243a"/>
+    <text x="28" y="106" class="c">echo URL &gt; ~/.config/</text><text x="28" y="130" class="c">larry-lamp/url</text>
+  </g>
+  <text x="40" y="270" class="s">Needs Omarchy with bar plugins (Quickshell) and python3. No pip installs, no daemons of its own.</text>
+</svg>

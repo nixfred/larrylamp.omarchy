@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="250" viewBox="0 0 1200 250" role="img" aria-labelledby="t d">
+  <title id="t">The Larry Lamp widget on an Omarchy bar</title>
+  <desc id="d">A dark top bar with workspaces, a clock and tray icons. On the right the Larry Lamp ring breathes in blue next to an amber badge reading 2. Its tooltip says Larry Lamp, tokyo night, 2 sessions need you, and Larry's last words.</desc>
+  <defs>
+    <filter id="g" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a1124"/><stop offset="1" stop-color="#151b3a"/></linearGradient>
+    <style>
+      .w { font: 600 14px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8fa3c2; }
+      .clk { font: 700 14px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #c8d6ea; }
+      .tt { font: 13px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #c8d6ea; }
+      .tb { font: 700 13px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #e6edf7; }
+      .k { font: 700 12px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #2ea8ff; letter-spacing: 4px; }
+    </style>
+  </defs>
+  <rect width="1200" height="250" rx="20" fill="url(#wall)"/>
+  <rect x="1" y="1" width="1198" height="248" rx="19" fill="none" stroke="#1a2638" stroke-width="2"/>
+  <rect x="14" y="14" width="1172" height="38" rx="10" fill="#0a0e17" fill-opacity="0.95" stroke="#202c40"/>
+  <g class="w">
+    <text x="36" y="39" style="fill:#2ea8ff">1</text><text x="62" y="39">2</text><text x="88" y="39">3</text><text x="114" y="39">4</text><text x="140" y="39">5</text>
+    <rect x="30" y="44" width="16" height="2.5" rx="1" fill="#2ea8ff"/>
+  </g>
+  <text x="600" y="39" text-anchor="middle" class="clk">Thursday  09:41</text>
+  <g opacity="0.75">
+    <path d="M936 37 a10 10 0 0 1 16 0 M940 33 a14 14 0 0 1 8 0" fill="none" stroke="#8fa3c2" stroke-width="2"/>
+    <circle cx="944" cy="40" r="2" fill="#8fa3c2"/>
+    <path d="M974 27 v10 a5 5 0 0 0 10 0 v-10" fill="none" stroke="#8fa3c2" stroke-width="2"/>
+    <rect x="1004" y="27" width="26" height="14" rx="3" fill="none" stroke="#8fa3c2" stroke-width="1.6"/>
+    <rect x="1006" y="29" width="17" height="10" rx="1.5" fill="#2dff9a"/>
+    <rect x="1031" y="31" width="2.5" height="6" rx="1" fill="#8fa3c2"/>
+  </g>
+  <rect x="1058" y="18" width="78" height="30" rx="8" fill="#2ea8ff" fill-opacity="0.10" stroke="#2ea8ff" stroke-opacity="0.45"/>
+  <circle cx="1082" cy="33" r="8.5" fill="none" stroke="#2ea8ff" stroke-width="3.4" filter="url(#g)">
+    <animate attributeName="opacity" values="1;0.45;1" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1082" cy="33" r="2.6" fill="#e6edf7"/>
+  <circle cx="1112" cy="33" r="9" fill="#f5a623"><animate attributeName="r" values="9;10.2;9" dur="1.4s" repeatCount="indefinite"/></circle>
+  <text x="1112" y="38" text-anchor="middle" style="font:800 12px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace;fill:#111">2</text>
+
+  <path d="M1090 54 l8 8 l8 -8" fill="#0a0e17" stroke="#2a3a52"/>
+  <rect x="790" y="62" width="390" height="104" rx="10" fill="#0a0e17" stroke="#2a3a52"/>
+  <text x="808" y="88" class="tb">Larry Lamp  tokyo-night</text>
+  <text x="808" y="112" class="tt" style="fill:#f5a623">2 sessions need you</text>
+  <text x="808" y="136" class="tt">Larry: tests are green, PR is</text>
+  <text x="808" y="156" class="tt">ready when you are.</text>
+
+  <text x="36" y="110" class="k">ON YOUR BAR</text>
+  <text x="36" y="140" style="font: 600 26px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #e6f0ff;">A ring. A count. A tooltip.</text>
+  <text x="36" y="172" style="font: 15px 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #8ea3c0;">Hover for the theme and Larry's last words; click for the panel.</text>
+  <text x="36" y="222" style="font: 12.5px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #6f86a6;">omarchy-shell nixfred.larrylamp toggle</text>
+</svg>

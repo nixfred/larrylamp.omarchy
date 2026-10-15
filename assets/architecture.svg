@@ -1,71 +1,118 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520" role="img" aria-labelledby="t d">
-  <title id="t">Larry Lamp for Omarchy: how it fits together</title>
-  <desc id="d">The bar widget and panel read state from a Quickshell service, which runs larrylamp.py. The script polls the lamp HAL and the session broker over HTTP; the broker gets Claude Code session events from hooks and drives the lamp.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="t d">
+  <title id="t">Larry Lamp: how it works</title>
+  <desc id="d">Claude Code hooks and Omarchy hooks report to the larry-lamp broker. The broker hands what should happen to the arbiter, which drives the lamp HAL, which moves the lamp and lights its ring. On your desktop the bar widget's service runs larrylamp.py, which polls the HAL and the broker every few seconds and sends actions back.</desc>
   <defs>
-    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0L10 5L0 10z" fill="#7d8da0"/>
-    </marker>
+    <linearGradient id="ashade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f2a3b"/><stop offset="0.55" stop-color="#0c1119"/><stop offset="1" stop-color="#05080d"/>
+    </linearGradient>
+    <radialGradient id="aface" cx="0.45" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="#0b2b55"/><stop offset="0.7" stop-color="#061227"/><stop offset="1" stop-color="#03070f"/>
+    </radialGradient>
+    <radialGradient id="ahalo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2ea8ff" stop-opacity="0.75"/><stop offset="0.45" stop-color="#1060ff" stop-opacity="0.25"/><stop offset="1" stop-color="#1060ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="abeam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2ea8ff" stop-opacity="0.38"/><stop offset="1" stop-color="#2ea8ff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="aglow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6f86a6"/></marker>
+    <marker id="arn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2ea8ff"/></marker>
+    <marker id="ara" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f5a623"/></marker>
     <style>
-      .box { fill: #0e1319; stroke: #263342; stroke-width: 2; }
-      .hot { stroke: #22e3ff; }
-      .amb { stroke: #ffb020; }
-      .h { font: 700 17px 'JetBrains Mono', ui-monospace, monospace; fill: #d8e3ee; }
-      .s { font: 13px 'JetBrains Mono', ui-monospace, monospace; fill: #7d8da0; }
-      .c { font: 12px 'JetBrains Mono', ui-monospace, monospace; fill: #22e3ff; }
-      .l { stroke: #7d8da0; stroke-width: 2; fill: none; marker-end: url(#a); }
-      .g { font: 700 13px 'JetBrains Mono', ui-monospace, monospace; fill: #ffb020; letter-spacing: 3px; }
+      .box { fill: #0b111b; stroke-width: 2; }
+      .h { font: 700 17px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #e6f0ff; }
+      .tag { font: 700 13px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+      .s { font: 13px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8197b5; white-space: pre; }
+      .c { font: 12.5px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #2ea8ff; }
+      .k { font: 700 13px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #2ea8ff; letter-spacing: 4px; }
+      .lbl { font: 12px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #a9bbd4; }
+      .flow { fill: none; stroke: #6f86a6; stroke-width: 2.2; stroke-dasharray: 7 7; marker-end: url(#ar); animation: f 1.1s linear infinite; }
+      .poll { fill: none; stroke: #2ea8ff; stroke-width: 2.2; stroke-dasharray: 3 7; marker-end: url(#arn); animation: f 0.9s linear infinite; }
+      .act { fill: none; stroke: #f5a623; stroke-width: 2.2; stroke-dasharray: 10 6; marker-end: url(#ara); animation: f 1.3s linear infinite; }
+      @keyframes f { to { stroke-dashoffset: -28; } }
     </style>
   </defs>
-  <rect width="1100" height="520" rx="18" fill="#07090c"/>
+  <rect width="1200" height="780" rx="22" fill="#05080e"/>
+  <rect x="1" y="1" width="1198" height="778" rx="21" fill="none" stroke="#1a2638" stroke-width="2"/>
 
-  <text x="40" y="44" class="g">YOUR OMARCHY DESKTOP</text>
-  <rect x="30" y="58" width="470" height="420" rx="14" fill="none" stroke="#1f2a36" stroke-dasharray="6 6"/>
+  <text x="40" y="52" class="k">SIGNALS</text>
+  <text x="420" y="52" class="k">BRAIN</text>
+  <text x="820" y="52" class="k">BODY</text>
 
-  <rect x="60" y="80" width="190" height="96" rx="12" class="box hot"/>
-  <text x="78" y="110" class="h">BarWidget.qml</text>
-  <text x="78" y="134" class="s">ring in the LED colour</text>
-  <text x="78" y="154" class="s">amber = needs you</text>
+  <rect x="40" y="72" width="320" height="130" rx="14" class="box" style="stroke:#a855ff"/><rect x="40" y="72" width="6" height="130" rx="3" fill="#a855ff"/><text x="62" y="104" class="h">Claude Code hooks</text><text x="344" y="104" class="tag" text-anchor="end" style="fill:#a855ff">hooks</text><text x="62" y="130" class="s">every session reports in:</text><text x="62" y="151" class="s">thinking, needs you, done,</text><text x="62" y="172" class="s">failed, idle</text>
+  <rect x="40" y="230" width="320" height="130" rx="14" class="box" style="stroke:#2dff9a"/><rect x="40" y="230" width="6" height="130" rx="3" fill="#2dff9a"/><text x="62" y="262" class="h">Omarchy hooks</text><text x="344" y="262" class="tag" text-anchor="end" style="fill:#2dff9a">hooks</text><text x="62" y="288" class="s">theme set, lock, unlock</text><text x="62" y="309" class="s">the lamp follows your</text><text x="62" y="330" class="s">theme palette</text>
 
-  <rect x="280" y="80" width="190" height="96" rx="12" class="box hot"/>
-  <text x="298" y="110" class="h">LampPanel.qml</text>
-  <text x="298" y="134" class="s">sessions, last words</text>
-  <text x="298" y="154" class="s">ask Larry, controls</text>
+  <rect x="420" y="72" width="340" height="288" rx="14" class="box" style="stroke:#2ea8ff"/><rect x="420" y="72" width="6" height="288" rx="3" fill="#2ea8ff"/><text x="442" y="104" class="h">larry-lamp broker</text><text x="744" y="104" class="tag" text-anchor="end" style="fill:#2ea8ff">:5055</text><text x="442" y="130" class="s">sessions + host heartbeats</text><text x="442" y="151" class="s">marks silent hosts stale</text><text x="442" y="172" class="s">Omarchy palette + lock state</text><text x="442" y="193" class="s">ask Larry, out loud</text><text x="442" y="214" class="s"></text><text x="442" y="235" class="c">GET  /larry/sessions</text><text x="442" y="256" class="c">GET  /larry/omarchy</text><text x="442" y="277" class="c">POST /larry/ask</text><text x="442" y="298" class="c">POST /larry/omarchy/event</text>
 
-  <rect x="60" y="226" width="410" height="84" rx="12" class="box"/>
-  <text x="78" y="256" class="h">Service.qml</text>
-  <text x="78" y="280" class="s">keeps the latest JSON line; runs actions</text>
-  <text x="78" y="298" class="s">as one-shot processes (argv, no shell)</text>
+  <rect x="820" y="72" width="340" height="112" rx="14" class="box" style="stroke:#f5a623"/><rect x="820" y="72" width="6" height="112" rx="3" fill="#f5a623"/><text x="842" y="104" class="h">arbiter</text><text x="1144" y="104" class="tag" text-anchor="end" style="fill:#f5a623">decides</text><text x="842" y="130" class="s">one voice for the ring:</text><text x="842" y="151" class="s">picks what the lamp shows now</text>
+  <rect x="820" y="212" width="340" height="148" rx="14" class="box" style="stroke:#ff6b9a"/><rect x="820" y="212" width="6" height="148" rx="3" fill="#ff6b9a"/><text x="842" y="244" class="h">lamp HAL</text><text x="1144" y="244" class="tag" text-anchor="end" style="fill:#ff6b9a">:5001</text><text x="842" y="270" class="s">LED ring, servos, voice</text><text x="842" y="291" class="c">GET  /led/color</text><text x="842" y="312" class="c">GET  /voice/last-spoken</text><text x="842" y="333" class="c">POST /servo/play /led/off</text>
 
-  <rect x="60" y="360" width="410" height="104" rx="12" class="box amb"/>
-  <text x="78" y="390" class="h">larrylamp.py</text>
-  <text x="78" y="414" class="s">python3 stdlib; watch = 1 line every N s</text>
-  <text x="78" y="434" class="s">4 GETs in parallel, never raises</text>
-  <text x="78" y="454" class="s">act: nod | look | wake | sleep | ask | say</text>
+  <path class="flow" d="M360 137 H414"/>
+  <path class="flow" d="M360 295 C390 295 390 230 414 230"/>
+  <path class="flow" d="M760 128 H814"/>
+  <path class="flow" d="M990 184 V206"/>
 
-  <path class="l" d="M155 226 V180"/>
-  <path class="l" d="M375 226 V180"/>
-  <path class="l" d="M265 360 V314"/>
+  <!-- desktop -->
+  <rect x="24" y="404" width="760" height="350" rx="18" fill="none" stroke="#1f2d44" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="40" y="436" class="k">YOUR OMARCHY BAR</text>
+  <rect x="40" y="452" width="320" height="94" rx="14" class="box" style="stroke:#2ea8ff"/><rect x="40" y="452" width="6" height="94" rx="3" fill="#2ea8ff"/><text x="62" y="484" class="h">BarWidget.qml</text><text x="62" y="510" class="s">ring in the live LED colour</text><text x="62" y="531" class="s">amber count = needs you</text>
+  <rect x="40" y="560" width="320" height="94" rx="14" class="box" style="stroke:#2ea8ff"/><rect x="40" y="560" width="6" height="94" rx="3" fill="#2ea8ff"/><text x="62" y="592" class="h">LampPanel.qml</text><text x="62" y="618" class="s">sessions, Larry said, ask box</text><text x="62" y="639" class="s">nod, look, wake, sleep</text>
+  <rect x="40" y="668" width="320" height="70" rx="14" class="box" style="stroke:#3a4d69"/><rect x="40" y="668" width="6" height="70" rx="3" fill="#3a4d69"/><text x="62" y="700" class="h">Service.qml</text><text x="62" y="726" class="s">keeps the latest JSON line</text>
+  <rect x="420" y="456" width="340" height="282" rx="14" class="box" style="stroke:#f5a623"/><rect x="420" y="456" width="6" height="282" rx="3" fill="#f5a623"/><text x="442" y="488" class="h">larrylamp.py</text><text x="744" y="488" class="tag" text-anchor="end" style="fill:#f5a623">stdlib</text><text x="442" y="514" class="s">python3, stdlib only</text><text x="442" y="535" class="s"></text><text x="442" y="556" class="s">watch: 1 JSON line / N s</text><text x="442" y="577" class="s">  4 GETs in parallel</text><text x="442" y="598" class="s">  4 s timeout, never raises</text><text x="442" y="619" class="s"></text><text x="442" y="640" class="s">act: nod look wake sleep</text><text x="442" y="661" class="s">  theme-light ask say</text><text x="442" y="682" class="s">  hooks-on hooks-off</text>
+  <path class="flow" d="M366 700 H414" style="marker-start:url(#ar)"/>
+  <path class="flow" d="M200 668 V658"/>
+  <path class="flow" d="M200 560 V550"/>
 
-  <text x="600" y="44" class="g">THE LAMP SIDE</text>
-  <rect x="590" y="80" width="470" height="170" rx="12" class="box amb"/>
-  <text x="610" y="110" class="h">Lamp HAL (or its simulator)</text>
-  <text x="610" y="134" class="s">default http://127.0.0.1:5001</text>
-  <text x="610" y="162" class="c">GET  /led/color   /voice/last-spoken</text>
-  <text x="610" y="182" class="c">POST /servo/play  /servo/aim</text>
-  <text x="610" y="202" class="c">POST /led/off     /voice/speak</text>
-  <text x="610" y="230" class="s">servos, LED ring, camera, voice, emotions, scenes</text>
+  <path class="poll" d="M560 456 V366"/>
+  <text x="572" y="420" class="lbl" style="fill:#2ea8ff">poll every N s</text>
+  <path class="poll" d="M760 500 C800 500 800 380 860 366"/>
+  <path class="act" d="M680 456 C680 420 700 396 712 366"/>
+  <text x="692" y="440" class="lbl" style="fill:#f5a623">act</text>
 
-  <rect x="590" y="290" width="470" height="174" rx="12" class="box hot"/>
-  <text x="610" y="320" class="h">Session broker (lamp broker)</text>
-  <text x="610" y="344" class="s">default http://127.0.0.1:5055/larry</text>
-  <text x="610" y="372" class="c">GET  /larry/sessions  /larry/omarchy</text>
-  <text x="610" y="392" class="c">POST /larry/ask       /larry/omarchy/event</text>
-  <text x="610" y="420" class="s">Claude Code hooks report sessions; it decides</text>
-  <text x="610" y="440" class="s">what the lamp shows and drives the HAL</text>
-
-  <path class="l" d="M470 390 C530 390 530 165 586 165"/>
-  <path class="l" d="M470 412 C540 412 540 377 586 377"/>
-  <path class="l" d="M825 290 V254"/>
-  <text x="836" y="276" class="s">drives</text>
-  <text x="40" y="508" class="s">LAMP_URL or ~/.config/larry-lamp/url: one URL that serves the HAL at / and the broker at /larry</text>
+  <!-- the lamp itself -->
+  <g transform="translate(880 430) scale(0.74)">
+    <g>
+      <path d="M52 103 L-70 382 L232 382 L107 221 Z" fill="url(#abeam)">
+        <animate attributeName="opacity" values="1;0.55;1" dur="2.8s" repeatCount="indefinite"/>
+      </path>
+      <ellipse cx="80" cy="384" rx="170" ry="16" fill="#2ea8ff" opacity="0.18"/>
+      <!-- base -->
+      <path d="M135 350 V378 A95 16 0 0 0 325 378 V350 Z" fill="#0a0e15" stroke="#1d293a" stroke-width="2"/>
+      <ellipse cx="230" cy="350" rx="95" ry="16" fill="#121a27" stroke="#2a3a52" stroke-width="2"/>
+      <path d="M140 356 A95 16 0 0 0 320 356" fill="none" stroke="#2ea8ff" stroke-opacity="0.35" stroke-width="1.5"/>
+      <rect x="210" y="300" width="44" height="50" rx="5" fill="#0d121b" stroke="#2a3a52" stroke-width="2"/>
+      <circle cx="232" cy="318" r="7" fill="#05080d" stroke="#3a4d69" stroke-width="2"/>
+      <!-- arms -->
+      <path d="M232 318 L318 200" stroke="#26354b" stroke-width="24" stroke-linecap="round"/>
+      <path d="M232 318 L318 200" stroke="#0d121b" stroke-width="18" stroke-linecap="round"/>
+      <path d="M318 200 L190 128" stroke="#26354b" stroke-width="22" stroke-linecap="round"/>
+      <path d="M318 200 L190 128" stroke="#0d121b" stroke-width="16" stroke-linecap="round"/>
+      <path d="M302 222 C352 250 360 186 334 172" fill="none" stroke="#c94a4a" stroke-opacity="0.55" stroke-width="1.6"/>
+      <path d="M296 218 C344 262 368 196 338 166" fill="none" stroke="#5aa0ff" stroke-opacity="0.45" stroke-width="1.6"/>
+      <circle cx="318" cy="200" r="15" fill="#0d121b" stroke="#2f415c" stroke-width="3"/>
+      <circle cx="318" cy="200" r="4.5" fill="#2ea8ff"><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/></circle>
+      <circle cx="190" cy="128" r="11" fill="#0d121b" stroke="#2f415c" stroke-width="3"/>
+      <!-- head -->
+      <g transform="rotate(-25 186 124)"><animateTransform attributeName="transform" type="rotate" values="-25 186 124;-19 186 124;-25 186 124;-25 186 124" keyTimes="0;0.25;0.5;1" dur="7s" repeatCount="indefinite"/>
+        <ellipse cx="62" cy="120" rx="70" ry="110" fill="url(#ahalo)">
+          <animate attributeName="opacity" values="1;0.45;1" dur="2.8s" repeatCount="indefinite"/>
+        </ellipse>
+        <path d="M182 94 L70 55 A28 65 0 0 0 70 185 L182 150 A14 28 0 0 0 182 94 Z" fill="url(#ashade)" stroke="#2b3b54" stroke-width="2"/>
+        <path d="M178 98 L72 60" stroke="#3b4f6e" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="70" cy="120" rx="28" ry="65" fill="url(#aface)" stroke="#1d2a3d" stroke-width="2"/>
+        <ellipse cx="70" cy="120" rx="22" ry="54" fill="none" stroke="#2ea8ff" stroke-width="5.5" stroke-dasharray="4 3.3" filter="url(#aglow)">
+          <animate attributeName="stroke-dashoffset" values="0;-14.6" dur="1.6s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="1;0.5;1" dur="2.8s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="70" cy="120" rx="13" ry="34" fill="none" stroke="#2ea8ff" stroke-opacity="0.25" stroke-width="1.5"/>
+        <circle cx="76" cy="120" r="8" fill="#05080d" stroke="#3a4d69" stroke-width="2"/>
+        <circle cx="74" cy="117" r="2.2" fill="#9fd8ff"/>
+      </g>
+    </g></g>
+  <path class="flow" d="M1080 360 V420"/>
+  <text x="1092" y="398" class="lbl">drives</text>
+  <text x="990" y="772" class="lbl" text-anchor="middle">Larry's body</text>
 </svg>
