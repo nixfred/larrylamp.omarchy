@@ -34,7 +34,9 @@ BarWidget {
     active: false
     useActiveColor: false
     tooltipText: {
-      if (!root.online) return "Larry Lamp: offline (is the broker up on gus?)"
+      if (!root.online) return root.st && root.st.broker
+        ? "Larry Lamp: the lamp is not answering (broker is up)" + (root.waiting > 0 ? "\n" + root.waiting + " session" + (root.waiting > 1 ? "s" : "") + " need you" : "")
+        : "Larry Lamp: offline (neither the lamp nor its broker answers)"
       var s = "Larry Lamp  " + (root.st.theme || "") + (root.st.locked ? "  (away)" : "")
       if (root.waiting > 0) s += "\n" + root.waiting + " session" + (root.waiting > 1 ? "s" : "") + " need you"
       if (root.st.said) s += "\nLarry: " + root.st.said
@@ -49,6 +51,7 @@ BarWidget {
         width: Style.space(15); height: width
         anchors.verticalCenter: parent.verticalCenter
         Rectangle {  // the lamp's ring
+          id: ring
           anchors.centerIn: parent
           width: parent.width; height: width; radius: width / 2
           color: "transparent"; border.width: Math.max(2, width * 0.2); border.color: root.ringColor
@@ -57,7 +60,9 @@ BarWidget {
             running: root.breathing; loops: Animation.Infinite
             NumberAnimation { to: 0.45; duration: 1400; easing.type: Easing.InOutSine }
             NumberAnimation { to: 1.0; duration: 1400; easing.type: Easing.InOutSine }
-            onRunningChanged: if (!running) parent.opacity = 1
+            // An Animation has no parent property: the old "parent.opacity" resolved outside the ring,
+            // so when the lamp stopped breathing mid-fade the ring stayed dimmed at whatever opacity it had.
+            onRunningChanged: if (!running) ring.opacity = 1
           }
         }
         Rectangle {  // the head's lens

@@ -29,6 +29,8 @@ Panel {
   readonly property var stateName: ({ wait: "needs you", fail: "failed", think: "thinking", ship: "done", idle: "idle" })
 
   function ago(s) { return s < 60 ? s + "s" : Math.round(s / 60) + "m" }
+  // Buttons can be clicked before the service exists (bar just started); never throw into the shell
+  function act(action, text) { if (svc) svc.act(action, text) }
   function ask() {
     var t = askField.text.trim()
     if (!t || !svc) return
@@ -84,7 +86,7 @@ Panel {
           Layout.fillWidth: true
           spacing: Style.space(10)
           Rectangle {
-            width: Style.space(14); height: width; radius: width / 2
+            Layout.preferredWidth: Style.space(14); Layout.preferredHeight: Style.space(14); radius: width / 2
             color: "transparent"; border.width: 3; border.color: panel.widget.ringColor
           }
           Text {
@@ -96,7 +98,8 @@ Panel {
             font.letterSpacing: 2
           }
           Text {
-            text: !panel.widget.online ? "offline" : (panel.st.locked ? "away" : (panel.st.led.hex + "  " + (panel.st.led.effect || "solid")))
+            text: !panel.widget.online ? (panel.st && panel.st.broker ? "lamp offline" : "offline")
+              : (panel.st.locked ? "away" : (panel.st.led.hex + "  " + (panel.st.led.effect || "solid")))
             color: panel.dim
             font.family: panel.mono
             font.pixelSize: Style.font.bodySmall
@@ -181,7 +184,7 @@ Panel {
             height: panel.rowH
             spacing: Style.space(8)
             Rectangle {
-              width: Style.space(10); height: width; radius: width / 2; border.width: 0
+              Layout.preferredWidth: Style.space(10); Layout.preferredHeight: Style.space(10); radius: width / 2; border.width: 0
               color: panel.stateColor[modelData.state] || panel.dim
             }
             Text {
@@ -219,15 +222,15 @@ Panel {
           columns: 4
           columnSpacing: Style.space(6)
           rowSpacing: Style.space(6)
-          LampButton { label: "nod"; tip: "The lamp nods"; onClicked: panel.svc.act("nod") }
-          LampButton { label: "look at me"; tip: "Turn the head to you"; onClicked: panel.svc.act("look") }
-          LampButton { label: "theme light"; tip: "Ring to the current Omarchy theme accent"; onClicked: panel.svc.act("theme-light") }
-          LampButton { label: "wake"; tip: "Greeting motion"; onClicked: panel.svc.act("wake") }
-          LampButton { label: "sleep"; tip: "Sleepy motion and light off"; onClicked: panel.svc.act("sleep") }
+          LampButton { label: "nod"; tip: "The lamp nods"; onClicked: panel.act("nod") }
+          LampButton { label: "look at me"; tip: "Turn the head to you"; onClicked: panel.act("look") }
+          LampButton { label: "theme light"; tip: "Ring to the current Omarchy theme accent"; onClicked: panel.act("theme-light") }
+          LampButton { label: "wake"; tip: "Greeting motion"; onClicked: panel.act("wake") }
+          LampButton { label: "sleep"; tip: "Sleepy motion and light off"; onClicked: panel.act("sleep") }
           LampButton {
             label: panel.st && panel.st.hooks ? "sessions: on" : "sessions: muted"
             tip: "Whether this machine's Claude Code sessions drive the lamp (~/.config/larry-lamp/disabled)"
-            onClicked: panel.svc.act(panel.st && panel.st.hooks ? "hooks-off" : "hooks-on")
+            onClicked: panel.act(panel.st && panel.st.hooks ? "hooks-off" : "hooks-on")
           }
           LampButton {
             Layout.columnSpan: 2
