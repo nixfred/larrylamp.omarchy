@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // A ring lit in the lamp's real LED colour, breathing when the lamp breathes.
@@ -13,7 +14,7 @@ BarWidget {
   readonly property var svc: bar && bar.shell ? bar.shell.serviceFor(moduleName) : null
   readonly property var st: svc ? svc.st : null
   readonly property bool online: !!(svc && svc.ready && st && st.online)
-  readonly property color foreground: bar ? bar.foreground : Color.foreground
+  readonly property color foreground: bar ? bar.foreground : Commons.Color.foreground
   // Fixed amber: some themes map urgent colours to green, so "needs you" never derives from the palette.
   readonly property color waitColor: "#f5a623"
   readonly property int waiting: st ? (st.waiting || 0) : 0

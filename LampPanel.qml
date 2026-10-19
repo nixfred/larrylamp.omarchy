@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // LAW 17: everything on one screen. Only the session list scrolls, in place, in its own box.
@@ -16,7 +17,7 @@ Panel {
   readonly property var svc: widget.svc
   readonly property var st: svc ? svc.st : null
 
-  readonly property color foreground: widget.bar ? widget.bar.foreground : Color.foreground
+  readonly property color foreground: widget.bar ? widget.bar.foreground : Commons.Color.foreground
   readonly property color dim: Util.alpha(foreground, 0.62)
   readonly property color faint: Util.alpha(foreground, 0.10)
   readonly property string fontFamily: widget.bar ? widget.bar.fontFamily : Style.font.family
@@ -47,9 +48,9 @@ Panel {
     Layout.fillWidth: true
     implicitHeight: Style.space(30)
     radius: Style.space(4)
-    color: ma.containsMouse ? Util.alpha(Color.accent, 0.18) : panel.faint
+    color: ma.containsMouse ? Util.alpha(Commons.Color.accent, 0.18) : panel.faint
     border.width: 1
-    border.color: ma.containsMouse ? Color.accent : Util.alpha(panel.foreground, 0.18)
+    border.color: ma.containsMouse ? Commons.Color.accent : Util.alpha(panel.foreground, 0.18)
     Text {
       anchors.centerIn: parent
       text: b.label
@@ -110,7 +111,7 @@ Panel {
             implicitWidth: themeTxt.implicitWidth + Style.space(16)
             implicitHeight: Style.space(22)
             radius: height / 2
-            color: "transparent"; border.width: 1; border.color: Color.accent
+            color: "transparent"; border.width: 1; border.color: Commons.Color.accent
             Text {
               id: themeTxt
               anchors.centerIn: parent
@@ -145,9 +146,9 @@ Panel {
           Layout.fillWidth: true
           implicitHeight: saidTxt.implicitHeight + Style.space(16)
           radius: Style.space(4)
-          color: Util.alpha(Color.accent, 0.08)
+          color: Util.alpha(Commons.Color.accent, 0.08)
           border.width: 1
-          border.color: Util.alpha(Color.accent, 0.5)
+          border.color: Util.alpha(Commons.Color.accent, 0.5)
           Text {
             id: saidTxt
             anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter; margins: Style.space(10) }
