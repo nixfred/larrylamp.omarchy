@@ -1,34 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="350" viewBox="0 0 1200 350" role="img" aria-labelledby="t d">
   <title id="t">Where Larry Lamp looks for the lamp</title>
-  <desc id="d">First the LAMP_URL environment variable, then the first line of ~/.config/larry-lamp/url. Either one means the HAL is at the URL and the broker at URL/larry. With neither, the local defaults: HAL on 127.0.0.1:5001 and the broker on 127.0.0.1:5055/larry.</desc>
+  <desc id="d">First the environment (LAMP_URL, LAMP_BROKER), then ~/.config/larry-lamp/target.env written by lamp target sim or real, then the older one-line ~/.config/larry-lamp/url front door, then this machine: HAL on 127.0.0.1:5001 and the broker on 127.0.0.1:5055/larry. Tokens come from files: the lamp token as a Bearer to the HAL, the broker token as X-Larry-Token.</desc>
   <defs>
     <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6f86a6"/></marker>
     <marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2dff9a"/></marker>
     <style>
       .k { font: 700 13px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #2ea8ff; letter-spacing: 4px; }
-      .h { font: 700 17px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
-      .c { font: 12.5px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8ea3c0; }
+      .h { font: 700 16px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+      .c { font: 12px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8ea3c0; }
       .l { font: 700 12px ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
       .fl { fill: none; stroke: #6f86a6; stroke-width: 2.2; stroke-dasharray: 6 6; marker-end: url(#ar); animation: f 1s linear infinite; }
       .ok { fill: none; stroke: #2dff9a; stroke-width: 2.2; stroke-dasharray: 6 6; marker-end: url(#ag); animation: f 1s linear infinite; }
       @keyframes f { to { stroke-dashoffset: -24; } }
     </style>
   </defs>
-  <rect width="1200" height="330" rx="22" fill="#05080e"/>
-  <rect x="1" y="1" width="1198" height="328" rx="21" fill="none" stroke="#1a2638" stroke-width="2"/>
+  <rect width="1200" height="350" rx="22" fill="#05080e"/>
+  <rect x="1" y="1" width="1198" height="348" rx="21" fill="none" stroke="#1a2638" stroke-width="2"/>
   <text x="40" y="48" class="k">WHERE IT LOOKS FOR THE LAMP</text>
-  <g transform="translate(40 76)"><rect width="300" height="86" rx="14" fill="#0b111b" stroke="#2ea8ff" stroke-width="2"/><text x="20" y="36" class="h" style="fill:#2ea8ff">1  LAMP_URL</text><text x="20" y="62" class="c">environment variable</text></g>
-  <g transform="translate(420 76)"><rect width="340" height="86" rx="14" fill="#0b111b" stroke="#2ea8ff" stroke-width="2"/><text x="20" y="36" class="h" style="fill:#2ea8ff">2  url file</text><text x="20" y="62" class="c">~/.config/larry-lamp/url</text></g>
-  <g transform="translate(840 76)"><rect width="320" height="86" rx="14" fill="#0b111b" stroke="#a855ff" stroke-width="2"/><text x="20" y="36" class="h" style="fill:#a855ff">3  this machine</text><text x="20" y="62" class="c">no URL anywhere</text></g>
-  <path class="fl" d="M340 119 H414"/><text x="350" y="108" class="l" style="fill:#6f86a6">unset</text>
-  <path class="fl" d="M760 119 H834"/><text x="770" y="108" class="l" style="fill:#6f86a6">missing</text>
-  <path class="ok" d="M190 162 V214"/><text x="202" y="196" class="l" style="fill:#2dff9a">set</text>
-  <path class="ok" d="M590 162 V214"/><text x="602" y="196" class="l" style="fill:#2dff9a">found</text>
-  <path class="ok" d="M1000 162 V214"/>
-  <g transform="translate(40 220)"><rect width="720" height="80" rx="14" fill="#0b111b" stroke="#2dff9a" stroke-opacity="0.7" stroke-width="2"/>
-    <text x="20" y="34" class="h" style="fill:#e6f0ff">one front door</text>
-    <text x="20" y="60" class="c">HAL at URL/   broker at URL/larry   (reverse proxy, tailscale serve)</text></g>
-  <g transform="translate(840 220)"><rect width="320" height="80" rx="14" fill="#0b111b" stroke="#2dff9a" stroke-opacity="0.7" stroke-width="2"/>
-    <text x="20" y="34" class="c">HAL     127.0.0.1:5001</text>
-    <text x="20" y="60" class="c">broker  127.0.0.1:5055/larry</text></g>
+  <g transform="translate(40 76)"><rect width="240" height="86" rx="14" fill="#0b111b" stroke="#2ea8ff" stroke-width="2"/><text x="18" y="36" class="h" style="fill:#2ea8ff">1  environment</text><text x="18" y="62" class="c">LAMP_URL, LAMP_BROKER</text></g>
+  <g transform="translate(330 76)"><rect width="260" height="86" rx="14" fill="#0b111b" stroke="#2dff9a" stroke-width="2"/><text x="18" y="36" class="h" style="fill:#2dff9a">2  target.env</text><text x="18" y="62" class="c">lamp target sim | real</text></g>
+  <g transform="translate(640 76)"><rect width="240" height="86" rx="14" fill="#0b111b" stroke="#2ea8ff" stroke-width="2"/><text x="18" y="36" class="h" style="fill:#2ea8ff">3  url file</text><text x="18" y="62" class="c">older front door</text></g>
+  <g transform="translate(930 76)"><rect width="230" height="86" rx="14" fill="#0b111b" stroke="#a855ff" stroke-width="2"/><text x="18" y="36" class="h" style="fill:#a855ff">4  this machine</text><text x="18" y="62" class="c">nothing set</text></g>
+  <path class="fl" d="M280 119 H324"/>
+  <path class="fl" d="M590 119 H634"/>
+  <path class="fl" d="M880 119 H924"/>
+  <path class="ok" d="M460 162 V216"/><text x="472" y="196" class="l" style="fill:#2dff9a">the normal case</text>
+  <g transform="translate(40 222)"><rect width="840" height="100" rx="14" fill="#0b111b" stroke="#2dff9a" stroke-opacity="0.7" stroke-width="2"/>
+    <text x="20" y="32" class="h" style="fill:#e6f0ff">sim today, the real lamp on lamp day: same widget, nothing to edit</text>
+    <text x="20" y="58" class="c">HAL    sim 127.0.0.1:5001   or   real http://lamp-xxxx.local/api/hardware  (Bearer from LAMP_TOKEN_FILE)</text>
+    <text x="20" y="82" class="c">broker 127.0.0.1:5055/larry on the desktop  (X-Larry-Token from ~/.config/larry-lamp/broker.token)</text></g>
+  <path class="ok" d="M1045 162 V216"/>
+  <g transform="translate(930 222)"><rect width="230" height="100" rx="14" fill="#0b111b" stroke="#2dff9a" stroke-opacity="0.7" stroke-width="2"/>
+    <text x="18" y="42" class="c">HAL    127.0.0.1:5001</text>
+    <text x="18" y="70" class="c">broker 127.0.0.1:5055/larry</text></g>
 </svg>

@@ -4,10 +4,14 @@
   larrylamp.py watch [--interval N]   print one JSON state line every N seconds (the Service reads it)
   larrylamp.py act <action> [text]    nod | look | sleep | wake | theme-light | ask <text> | say <text> | hooks-on | hooks-off
 
-Talks to the lamp over your tailnet: set LAMP_URL, or put the URL on the first line of
-~/.config/larry-lamp/url, so the same plugin works on every machine. With neither, it talks to the
-lamp services on this machine directly (HAL on 127.0.0.1:5001, broker on 127.0.0.1:5055).
-Stdlib only; never raises into the bar.
+Which lamp: ~/.config/larry-lamp/target.env, written by `lamp target sim|real` (larry-lamp repo),
+so the bar follows the cutover from the simulator to the real lamp with nothing to edit here.
+Precedence: environment (LAMP_URL, LAMP_BROKER) > target.env > the older one-line
+~/.config/larry-lamp/url > this machine (HAL 127.0.0.1:5001, broker 127.0.0.1:5055).
+
+Tokens are read from files, never from this plugin: the lamp's (LAMP_TOKEN_FILE in target.env,
+sent as a Bearer to the HAL) and the broker's (~/.config/larry-lamp/broker.token, sent as
+X-Larry-Token). Stdlib only; never raises into the bar.
 """
 import json
 import os
@@ -16,31 +20,61 @@ import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
-def _base_url():
-    """LAMP_URL wins; else the first line of ~/.config/larry-lamp/url; else "" (this machine)."""
-    url = os.environ.get("LAMP_URL", "").strip()
-    if not url:
-        try:
-            with open(os.path.expanduser("~/.config/larry-lamp/url")) as f:
-                url = f.readline().strip()
-        except OSError:
-            url = ""
-    return url.rstrip("/")
+CONF = os.environ.get("LARRY_LAMP_CONF") or os.path.expanduser("~/.config/larry-lamp")
+LOCAL_HAL = "http://127.0.0.1:5001"
+LOCAL_BROKER = "http://127.0.0.1:5055/larry"
 
 
-# A configured URL is a front door that serves HAL at / and the broker at /larry (tailscale serve).
-# Without one, talk to the local services directly. The old default, http://127.0.0.1:8443, was
-# never served by anything: tailscale serve listens on the tailnet address with TLS, not loopback.
-_URL = _base_url()
-BASE = _URL or "http://127.0.0.1:5001"
-BROKER = (_URL + "/larry") if _URL else "http://127.0.0.1:5055/larry"
-DISABLED = os.path.expanduser("~/.config/larry-lamp/disabled")
+def _read(path):
+    try:
+        with open(os.path.expanduser(path)) as f:
+            return f.read()
+    except OSError:
+        return ""
+
+
+def _first_line(path):
+    lines = _read(path).strip().splitlines()
+    return lines[0].strip() if lines else ""
+
+
+def _target():
+    """LAMP_* settings: target.env, then the legacy url file, then non-empty environment."""
+    t = {}
+    for line in _read(os.path.join(CONF, "target.env")).splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            k, v = line.split("=", 1)
+            t[k.strip()] = v.strip().strip("\"'")
+    if not t.get("LAMP_URL"):
+        url = _first_line(os.path.join(CONF, "url")).rstrip("/")
+        if url:  # the older front door: HAL at /, broker at /larry
+            t.setdefault("LAMP_URL", url)
+            t.setdefault("LAMP_BROKER", url + "/larry")
+    t.update({k: v for k, v in os.environ.items() if k.startswith("LAMP_") and v})
+    return t
+
+
+_T = _target()
+BASE = (_T.get("LAMP_URL") or LOCAL_HAL).rstrip("/")
+# The simulator and the real lamp never serve /larry: the broker lives next to the bar
+BROKER = (_T.get("LAMP_BROKER") or LOCAL_BROKER).rstrip("/")
+TARGET = _T.get("LAMP_TARGET", "")
+HAL_TOKEN = _T.get("LAMP_TOKEN") or (_first_line(_T["LAMP_TOKEN_FILE"]) if _T.get("LAMP_TOKEN_FILE") else "")
+BROKER_TOKEN = _T.get("LAMP_BROKER_TOKEN") or _first_line(
+    _T.get("LAMP_BROKER_TOKEN_FILE") or os.path.join(CONF, "broker.token"))
+DISABLED = os.path.join(CONF, "disabled")
 
 
 def call(url, body=None, timeout=4):
     data = None if body is None else json.dumps(body).encode()
-    req = urllib.request.Request(url, data=data, method="GET" if body is None else "POST",
-                                 headers={"content-type": "application/json"})
+    headers = {"content-type": "application/json"}
+    if url.startswith(BROKER + "/"):
+        if BROKER_TOKEN:
+            headers["x-larry-token"] = BROKER_TOKEN
+    elif HAL_TOKEN:
+        headers["authorization"] = "Bearer " + HAL_TOKEN
+    req = urllib.request.Request(url, data=data, method="GET" if body is None else "POST", headers=headers)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read() or b"{}")
 
@@ -87,6 +121,7 @@ def state():
         "saidSeq": said.get("seq", 0),
         "hooks": not os.path.exists(DISABLED),
         "console": BASE + "/static/larry-lamp.html",
+        "target": TARGET or ("sim" if BASE == LOCAL_HAL else ""),
         "t": int(time.time()),
     }
 
@@ -98,7 +133,8 @@ def act(action, text=""):
         return safe(BASE + "/servo/aim", {"direction": "user"})
     if action == "sleep":
         safe(BASE + "/servo/play", {"recording": "sleepy"})
-        return safe(BASE + "/led/off", {})
+        # transient: a muted lamp keeps its mic-muted light (a plain /led/off would dismiss it)
+        return safe(BASE + "/led/off", {"transient": True})
     if action == "wake":
         return safe(BASE + "/servo/play", {"recording": "greeting"})
     if action == "theme-light":

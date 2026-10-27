@@ -202,9 +202,9 @@ ln -s ~/src/larrylamp.omarchy ~/.config/omarchy/plugins/nixfred.larrylamp
 
 # 3. open the Omarchy bar settings and add "Larry Lamp" (category AI)
 
-# 4. optional: point it at a lamp that is not on this machine
-mkdir -p ~/.config/larry-lamp
-echo "https://your-lamp.example" > ~/.config/larry-lamp/url
+# 4. optional: with the larry-lamp CLI, pick the lamp once (the widget follows it)
+lamp target sim                       # the simulator on this machine
+lamp target real --host lamp-xxxx.local   # the real lamp, after `lamp target token`
 ```
 
 It lands on the right side of the bar by default. Update later with `git -C ~/src/larrylamp.omarchy pull`.
@@ -214,19 +214,22 @@ It lands on the right side of the bar by default. Update later with `git -C ~/sr
 ## Configuration
 
 <p align="center">
-  <img src="assets/url-lookup.svg" alt="Lookup order: LAMP_URL, then ~/.config/larry-lamp/url, then the local defaults" width="100%">
+  <img src="assets/url-lookup.svg" alt="Lookup order: environment, then ~/.config/larry-lamp/target.env, then the older ~/.config/larry-lamp/url, then the local defaults" width="100%">
 </p>
 
 | Setting | Where | Default | Notes |
 | --- | --- | --- | --- |
-| `LAMP_URL` | environment of the shell | unset | One URL that serves the HAL at `/` and the broker at `/larry`. Wins over everything. |
-| `~/.config/larry-lamp/url` | file, first line | missing | Same as `LAMP_URL`. Easier than env vars, since the bar has to see them. |
-| HAL | built in | `http://127.0.0.1:5001` | Used when no URL is set. |
-| Broker | built in | `http://127.0.0.1:5055/larry` | Used when no URL is set. |
+| `LAMP_URL`, `LAMP_BROKER` | environment of the shell | unset | HAL base and broker URL. Win over everything (the bar rarely sees them). |
+| `~/.config/larry-lamp/target.env` | file, `KEY=value` lines | missing | Written by `lamp target sim\|real` from the larry-lamp CLI. Holds `LAMP_URL`, `LAMP_BROKER` and token file paths, never tokens. This is how the bar follows the move from the simulator to the real lamp. |
+| `~/.config/larry-lamp/url` | file, first line | missing | Older front door: HAL at the URL, broker at URL`/larry`. Used only when `target.env` names no `LAMP_URL`. |
+| HAL token | `LAMP_TOKEN_FILE` in `target.env` | none | The real lamp's token, sent as `Authorization: Bearer` to the HAL only. The simulator needs none. |
+| Broker token | `~/.config/larry-lamp/broker.token` | none | Sent as `X-Larry-Token` to the broker. The broker answers 401 without it (only `/health` is open). |
+| HAL | built in | `http://127.0.0.1:5001` | Used when nothing is set. |
+| Broker | built in | `http://127.0.0.1:5055/larry` | Used when nothing is set. |
 | **Refresh (seconds)** `intervalSec` | Omarchy bar settings | `2` | 1 to 30. Changing it restarts the watcher. |
 | `~/.config/larry-lamp/disabled` | flag file | absent | Present = this machine's sessions do not drive the lamp. The panel button toggles it. |
 
-A front door URL is anything that routes `/` to the HAL and `/larry` to the broker: a reverse proxy, `tailscale serve`, whatever you like. Set it once per machine and every bar talks to the same lamp.
+`lamp target` is the one switch: run it once per machine and every bar talks to the same lamp. The older front door URL (anything that routes `/` to the HAL and `/larry` to the broker) still works when there is no `target.env`. Tokens stay in their files: this plugin never stores or prints them.
 
 ### The state line
 
@@ -287,9 +290,10 @@ Larry Lamp is built to fail quietly. The four requests run in parallel with a 4 
 
 | You see | Likely cause | Try |
 | --- | --- | --- |
-| Faint ring, tooltip says **offline** | Nothing answers at the URL in use | `curl -s http://127.0.0.1:5001/led/color` and `curl -s http://127.0.0.1:5055/larry/sessions` (or your front door URL). Check `LAMP_URL` and `~/.config/larry-lamp/url` for typos. |
+| Faint ring, tooltip says **offline** | Nothing answers at the URL in use | `curl -s http://127.0.0.1:5001/led/color` and `curl -s http://127.0.0.1:5055/larry/sessions` (or your front door URL). Check `lamp target status`, then `LAMP_URL` and `~/.config/larry-lamp/url` for typos. |
 | Faint ring, tooltip says **the lamp is not answering (broker is up)** | The lamp is off, asleep, rebooting or not delivered yet | Sessions and the amber count keep working. Power the lamp and wait one refresh. |
-| `LAMP_URL` set in your terminal but ignored | The bar does not inherit your terminal's environment | Put the URL in `~/.config/larry-lamp/url` instead. |
+| `LAMP_URL` set in your terminal but ignored | The bar does not inherit your terminal's environment | Use `lamp target sim\|real` (it writes `target.env`) instead. |
+| Sessions empty, the broker log shows 401 | No broker token on this machine | Copy it from the broker host into `~/.config/larry-lamp/broker.token` (mode 600), for example with `lamp target token --broker`. |
 | Ring faint but tooltip shows the theme | The lamp answers, its LED is off or black | Hit **wake** or **theme light** in the panel. |
 | Amber count lower than the sessions you see waiting | Those sessions come from a host that stopped heartbeating | Stale hosts never count as "needs you". Check that the host is up and its hooks still run. |
 | This machine's sessions never move the lamp | Sessions are muted here | The panel shows **sessions: muted**. Click it, or `rm ~/.config/larry-lamp/disabled`. |
